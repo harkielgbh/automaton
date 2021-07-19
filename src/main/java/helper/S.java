@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class S {
 	public static Robot robot;
@@ -17,7 +18,9 @@ public class S {
 			e.printStackTrace();
 		}
 		//-----
-		driver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--start-maximized");
+		driver = new ChromeDriver(options);
 	}
 	
 

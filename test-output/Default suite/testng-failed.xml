@@ -6,4 +6,18 @@
       <class name="challengetest.Tests"/>
     </classes>
   </test> <!-- Default test -->
+  <test parallel="none" name="Default test(failed)">
+    <classes>
+      <class name="challengetest.Tests">
+        <methods>
+          <include name="testPurchaseMerch"/>
+          <include name="testSections"/>
+          <include name="testSpecials"/>
+          <include name="launchapp"/>
+          <include name="terminatetest"/>
+          <include name="testFooter"/>
+        </methods>
+      </class> <!-- challengetest.Tests -->
+    </classes>
+  </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
