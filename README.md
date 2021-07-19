@@ -12,6 +12,6 @@ After downloading, make sure your IDE has maven and test-NG plugins installed. U
 Various tests on a dummy test site, tests are listes in the Test-Ng file.
 
 **Anything else?**
-Page object was used as a basis for the structure.
+Page object model was used as a basis for the structure.
 
 
