@@ -10,3 +10,6 @@ After downloading, make sure your IDE has maven and test-NG plugins installed. U
 
 Anything else?
 Really not, just run as test-NG and voila!
+
+What does it do?
+Various tests on a dummy test site, tests are listes in the Test-Ng file.
