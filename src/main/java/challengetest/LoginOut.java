@@ -7,13 +7,14 @@ public class LoginOut {
 	static final String PASSWORD = "h3110moto";
 	
 	static final String login_btn = "#header > div.nav > div > div > nav > div.header_user_info";
-	
 	static final String email_in = "#email";
 	static final String password_in = "#passwd";
 	static final String sign_in_btn = "#SubmitLogin > span";
 	
-	static public void login() {
+	static public void login() { //ok login
 		H.location("Login");
+		H.waitCss(login_btn);
+		H.clickCss(login_btn);
 		login(USERNAME,PASSWORD);
 	}
 	static public void login(String user, String pass) {
@@ -21,6 +22,7 @@ public class LoginOut {
 		H.waitCss(login_btn);
 		H.clickCss(login_btn);
 		
+		H.waitCss(email_in);
 		H.sendKeysbyCSS(email_in, user);
 		H.sendKeysbyCSS(password_in, pass);
 		H.clickCss(sign_in_btn);

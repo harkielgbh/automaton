@@ -42,6 +42,10 @@ public class H {
 		return rep;
 	}
 	
+	public static void quit() {
+		S.driver.quit();
+	}
+	
 	public static void ass(boolean condition) {
 		if(!condition) {
 		    throw new IllegalArgumentException("Condition is not true");
