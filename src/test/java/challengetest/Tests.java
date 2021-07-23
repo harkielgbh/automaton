@@ -13,11 +13,17 @@ public class Tests {
 	   public void launchapp() {
 	      // Puts an Implicit wait, Will wait for 10 seconds before throwing exception
 	      
-			System.setProperty("webdriver.chrome.driver", "chromedriver90.exe");
+			System.setProperty("webdriver.chrome.driver", "chromedriver92.exe");
 			String URL = "http://automationpractice.com/index.php";
 			S.driver.get(URL);
 	   }
 	
+	@Test
+	public void testSpecials() {
+		HomeMerch.goHome();
+		Specials.onlySpecials();
+	}
+		
 	@Test
 	public void testLogin() {
 		HomeMerch.goHome();
@@ -53,11 +59,6 @@ public class Tests {
 		DetailMerch.readDetails(3);
 	}
 	
-	@Test
-	public void testSpecials() {
-		HomeMerch.goHome();
-		Specials.onlySpecials();
-	}
 	
 	@Test
 	public void testPurchaseMerch() {
@@ -84,7 +85,6 @@ public class Tests {
 		H.sleep(3);
 		Checkout.compareCart();
 	}
-	
 	   @AfterTest
 	   public void terminatetest() {
 	      S.driver.close();

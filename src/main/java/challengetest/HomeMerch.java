@@ -3,6 +3,7 @@ package challengetest;
 import java.text.NumberFormat;
 
 import helper.H;
+import helper.S;
 
 public class HomeMerch {
 	public static String popular_item = "#homefeatured > li:nth-child("; //2);
@@ -73,7 +74,7 @@ public class HomeMerch {
 
 	
 	public static void goHome() { // click main logo
-		H.clickCss("#header_logo > a");
+		S.driver.get("http://automationpractice.com/index.php");
 	}
 	
 	public static Item validateItemHoverInfo(int id) {
