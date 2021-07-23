@@ -130,8 +130,10 @@ public class Footer {
 	};
 	static public void subscribeNewsletter() {
 		for(int i = 0; i < newsletter_email_alert.length; ++ i ) {
+			H.scrollBottom();
 			H.waitCss(newsletter_in);
 			H.sendKeysbyCSS(newsletter_in, newsletter_email_alert[i][0]);
+			H.waitCss(newsletter_btn);
 			H.clickCss(newsletter_btn);
 			H.waitCss(newsletter_alert);
 			H.ass(H.getTextCss(newsletter_alert), newsletter_email_alert[i][1]);
