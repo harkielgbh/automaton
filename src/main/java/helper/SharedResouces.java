@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class S {
+public class SharedResouces {
 	public static Robot robot;
 	public static WebDriver driver;
 	
@@ -14,7 +14,7 @@ public class S {
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			H.pl("There is an issue with java robot class");
+			Helper.pl("There is an issue with java robot class");
 			e.printStackTrace();
 		}
 		//-----

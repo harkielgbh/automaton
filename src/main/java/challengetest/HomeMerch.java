@@ -2,9 +2,14 @@ package challengetest;
 
 import java.text.NumberFormat;
 
-import helper.H;
-import helper.S;
+import helper.Helper;
+import helper.SharedResouces;
 
+/***
+ * Purpose: this class represents the cover home page, including quick view modal
+ * @author harki
+ *
+ */
 public class HomeMerch {
 	public static String popular_item = "#homefeatured > li:nth-child("; //2);
 	
@@ -31,25 +36,35 @@ public class HomeMerch {
 	
 	static String logo = "#header_logo > a";
 	//===========================================================================
+	
+	/***
+	 * Hover over a product in home screen
+	 */
 	public static void hoverMerch(int i) {
-		H.waitCss(popular_item + i + ")");
-		H.hoverCss(popular_item + i + ")");
-		H.sleep(1);
+		Helper.waitCss(popular_item + i + ")");
+		Helper.hoverCss(popular_item + i + ")");
+		Helper.sleep(1);
 	}
 
-	public static void hoverAllMerch() { // hover over each item, and make sure hover and un-hovered is same item
+	/***
+	 * hover over each item, and make sure hover and un-hovered is same item
+	 */
+	public static void hoverAllMerch() {
 		goHome();
-		H.waitCss(item_home + 1 + item_name2);
-		H.sleep(3);
-		for(int i = 1; H.isPresentCss(item_home + i + item_name2); ++ i) {
+		Helper.waitCss(item_home + 1 + item_name2);
+		Helper.sleep(3);
+		// for each item validate on hover and normal show same info
+		for(int i = 1; Helper.isPresentCss(item_home + i + item_name2); ++ i) {
 			validateItemHoverInfo(i);
 		}
 
 	}
-	
-	public static void clickItem(int id) { // click merch item from home page
-		H.waitCss(item_box1 + id + item_box2);
-		H.clickCss(item_box1 + id + item_box2);
+	/***
+	 * click product from home page at idex id
+	 */
+	public static void clickItem(int id) {
+		Helper.waitCss(item_box1 + id + item_box2);
+		Helper.clickCss(item_box1 + id + item_box2);
 	}
 	//===================================================================================
 	
@@ -72,41 +87,50 @@ public class HomeMerch {
 	public static String view_close = "#index > div.fancybox-overlay.fancybox-overlay-fixed > div > div > a";
 	
 
-	
-	public static void goHome() { // click main logo
-		S.driver.get("http://automationpractice.com/index.php");
+	/***
+	 * CLick logo to go to home page
+	 */
+	public static void goHome() {
+		SharedResouces.driver.get("http://automationpractice.com/index.php");
 	}
-	
+	/***
+	 * validate each product shows the same information normal and on hover
+	 */
 	public static Item validateItemHoverInfo(int id) {
+		// create objects, one for normal product and one for on hover
 		Item item = new Item();
 		Item item_hover = new Item();
 		
-		item.name = H.getTextCss(item_home + id + item_name2);
-		item.price = H.getTextCss(item_home + id + item_price2);
-		
-		if(H.isPresentCss(item_home + id + item_discount2)) {
-			item.old_price = H.getTextCss(item_home + id + item_old_price2);
-			item.discount = H.getTextCss(item_home + id + item_discount2);
+		// read product name
+		item.name = Helper.getTextCss(item_home + id + item_name2);
+		item.price = Helper.getTextCss(item_home + id + item_price2);
+		// check if discounted and save information
+		if(Helper.isPresentCss(item_home + id + item_discount2)) {
+			item.old_price = Helper.getTextCss(item_home + id + item_old_price2);
+			item.discount = Helper.getTextCss(item_home + id + item_discount2);
 			item.discounted = true;
 		}
 		//-------------------------------------
-		H.scrollCss(popular_item + id + ")");
-		H.sleep(1);
-		H.hoverCss(popular_item + id + ")");
-		H.sleep(2);
-		item_hover.name = H.getTextCss(item_home + id + item_name2);
-		item_hover.price = H.getTextCss(item_home + id + item_price_hover);
-		
-		if(H.isPresentCss(item_home + id + item_discount_hover)) {
-			item_hover.old_price = H.getTextCss(item_home + id + item_old_price_hover);
-			item_hover.discount = H.getTextCss(item_home + id + item_discount_hover);
+		// hover item
+		Helper.scrollCss(popular_item + id + ")");
+		Helper.sleep(1);
+		Helper.hoverCss(popular_item + id + ")");
+		Helper.sleep(2);
+		// get hovered item name & price
+		item_hover.name = Helper.getTextCss(item_home + id + item_name2);
+		item_hover.price = Helper.getTextCss(item_home + id + item_price_hover);
+		// get discount & price & old-price for hovered
+		if(Helper.isPresentCss(item_home + id + item_discount_hover)) {
+			item_hover.old_price = Helper.getTextCss(item_home + id + item_old_price_hover);
+			item_hover.discount = Helper.getTextCss(item_home + id + item_discount_hover);
 			item_hover.discounted = true;
 		}
 		//---------------------------------------
-		if(item.compare(item_hover)) { // for logging, if is not vital
-			H.info("Hover informations is correct");
+		// compare hover & normal objects
+		if(item.compare(item_hover)) {
+			Helper.info("Hover informations is correct");
 		} else {
-			H.ass("Hover informations is not equal to unhovered");
+			Helper.asserts("Hover informations is not equal to unhovered");
 		}
 		return item;
 		
@@ -125,165 +149,212 @@ public class HomeMerch {
 	static String modal_continue = "#layer_cart > div.clearfix > div.layer_cart_cart > div.button-container > span";
 	static String modal_checkout = "#layer_cart > div.clearfix > div.layer_cart_cart.col-xs-12.col-md-6 > div.button-container > a > span";
 	
+	/***
+	 * Adds a product to cart
+	 * @param id: index of product in table
+	 * @param size: an available size
+	 * @param color: an available color
+	 * @param quantity: amount
+	 * @param go_to_checkout: bool to decide if go home or go to checkout
+	 */
 	public static void viewAddToCart(int id, String size, String color, int quantity, boolean go_to_checkout) { // add products to cart
-
-        
+		// item to save product details
 		Item item = new Item();
-		H.waitCss(popular_item + id + ")");
-		H.scrollCss(popular_item + id + ")");
-		H.sleep(1);
-		H.hoverCss(popular_item + id + ")");
-		H.sleep(2);
+		Helper.waitCss(popular_item + id + ")");
+		Helper.scrollCss(popular_item + id + ")");
+		Helper.sleep(1);
+		// hover
+		Helper.hoverCss(popular_item + id + ")");
+		Helper.sleep(2);
 		//===============
-		H.location("QuickView");
-		H.clickCss(quick_view1 + id + quick_view2);
-		H.sleep(3);
-		H.pl("There are iframes: " + H.iframeCount());
-		
-		H.switchIframe(1);
-		H.waitCss(view_name);
-		item.price = H.getTextCss(view_price);
-		//===================
-		H.clickCss(view_size);
-		
+		Helper.location("QuickView");
+		// click quick view to see modal with product details
+		Helper.clickCss(quick_view1 + id + quick_view2);
+		Helper.sleep(3);
+		// manage iframes
+		Helper.pl("There are iframes: " + Helper.iframeCount());
+		Helper.switchIframe(1);
+		Helper.waitCss(view_name);
+		// read price
+		item.price = Helper.getTextCss(view_price);
+		//size dropdown
+		Helper.clickCss(view_size);
 		boolean found = false;
-		for(int i = 1; H.isPresentCss(view_size_options + i + ")") ; ++ i) {
-			H.pl(H.getTextCss(view_size_options + i + ")") + " --- " + size);
-			if(size.equals(H.getTextCss(view_size_options + i + ")"))) {
+		// for each size option
+		for(int i = 1; Helper.isPresentCss(view_size_options + i + ")") ; ++ i) {
+			Helper.pl(Helper.getTextCss(view_size_options + i + ")") + " --- " + size);
+			// if desired size is found
+			if(size.equals(Helper.getTextCss(view_size_options + i + ")"))) {
 				found = true;
-				H.clickCss(view_size_options + i + ")");
-				H.clickCss(view_size);
+				// click desired size
+				Helper.clickCss(view_size_options + i + ")");
+				Helper.clickCss(view_size);
 				break;
 			}
 		}
-		H.ass(found, "Size " + size + " was not found");
-		H.pl("===========================================");
-		H.sleep(5);
+		// make sure size was found
+		Helper.asserts(found, "Size " + size + " was not found");
+		Helper.pl("===========================================");
+		Helper.sleep(5);
+		
 		found = false;
-		for(int i = 1; H.isPresentCss(view_color + i + ")") ; ++ i) {
-			if(color.equals(H.getAttributeCss(view_color + i + ") > a", "name"))) {
+		// for each color option in drop down
+		for(int i = 1; Helper.isPresentCss(view_color + i + ")") ; ++ i) {
+			// if desired color is found
+			if(color.equals(Helper.getAttributeCss(view_color + i + ") > a", "name"))) {
 				found = true;
-				H.clickCss(view_color + i + ")");
+				// click color
+				Helper.clickCss(view_color + i + ")");
 				break;
 			}
 		}
-		H.ass(found, "Color" + color + "was not found");
+		// make sure desired color was found
+		Helper.asserts(found, "Color" + color + "was not found");
 		
-		H.clearCss(view_quantity);
-		H.sendKeysbyCSS(view_quantity, quantity + "");
-		H.clickCss(view_addtocart);
+		// clear, then enter a quantity
+		Helper.clearCss(view_quantity);
+		Helper.sendKeysbyCSS(view_quantity, quantity + "");
+		// click add to cart
+		Helper.clickCss(view_addtocart);
 		//==============================================
-		H.switchIframeDefault();
-		H.sleep(2);
-		H.waitCss(modal_name);
-		
-		item.name = H.getTextCss(modal_name);
-		
-		String[] parts = H.getTextCss(modal_color_size).split(", ");
-		H.ass(parts[0], color);
-		H.ass(parts[1], size);
+		Helper.switchIframeDefault();
+		Helper.sleep(2);
+		Helper.waitCss(modal_name);
+		// read name
+		item.name = Helper.getTextCss(modal_name);
+		// make sure product color/size is the color/size selected by user
+		String[] parts = Helper.getTextCss(modal_color_size).split(", ");
+		Helper.asserts(parts[0], color);
+		Helper.asserts(parts[1], size);
 		
 
 		
-		int other_quantity = 0; // this can be made simpler
-		boolean in_cart = false; // is the same item already in cart and we are just buying more of the same?
+		int other_quantity = 0; // this can be made simpler TODO: improve
+		//boolean in_cart = false; // is the same item already in cart and we are just buying more of the same? TODO: add this functionality
+		// if this product is already in cart
 		if(Cart.itemshistory.containsKey(item.name)) {
+			//if the same color and size is already on cart
 			if ( Cart.itemshistory.get(item.name).colorsize.get(color + size) != null ) {
-				in_cart = true;
+				//in_cart = true; TODO: add this functionality
+				//get the amount of color + size of this product already in cart
 				other_quantity = Cart.itemshistory.get(item.name).colorsize.get(color + size);
 			}
 		}
-		
-		
-		H.ass(H.getTextCss(modal_quantity), (quantity + other_quantity ) + "");
-		item.addSizeColorQuantity(size, color, H.getTextCss(modal_quantity));
-		NumberFormat nf= NumberFormat.getInstance();
-        nf.setMaximumFractionDigits(2);
-		H.pl("assert "  + Double.parseDouble(H.getTextCss(modal_total).substring(1)) + " == " + (quantity + other_quantity ) * Double.parseDouble(item.price.substring(1)));
-		H.ass(Double.parseDouble(H.getTextCss(modal_total).substring(1)) == Double.parseDouble(nf.format((quantity + other_quantity ) * Double.parseDouble(item.price.substring(1)))));
-		H.ass(Cart.items_in_cart + quantity == Integer.parseInt(H.getTextCss(modal_itemsincart)));
+		// make sure the quantity fields accounts for other products already in cart
+		Helper.asserts(Helper.getTextCss(modal_quantity), (quantity + other_quantity ) + "");
+		// add current purchase to item object
+		item.addSizeColorQuantity(size, color, Helper.getTextCss(modal_quantity));
+		NumberFormat nf= NumberFormat.getInstance(); // format
+        nf.setMaximumFractionDigits(2); // set precision 2 decimal places (avoid binary to base 10 remainders)
+        // make sure total takes into account items previously added to cart
+		Helper.pl("assert "  + Double.parseDouble(Helper.getTextCss(modal_total).substring(1)) + " == " + (quantity + other_quantity ) * Double.parseDouble(item.price.substring(1)));
+		Helper.asserts(Double.parseDouble(Helper.getTextCss(modal_total).substring(1)) == Double.parseDouble(nf.format((quantity + other_quantity ) * Double.parseDouble(item.price.substring(1)))));
+		// make sure amount of products in cart is correct
+		Helper.asserts(Cart.items_in_cart + quantity == Integer.parseInt(Helper.getTextCss(modal_itemsincart)));
+		// add current product
 		Cart.items_in_cart += quantity;
 		
 		
-		String tmp = H.getTextCss(modal_totalproducts).substring(1).replace(",", "");
+		String tmp = Helper.getTextCss(modal_totalproducts).substring(1).replace(",", "");
+		// add current price to total price
 		Cart.addTotal( (quantity ) * Double.parseDouble(item.price.substring(1)));
-		H.info("cart total is " + Cart.total);
-		H.ass( Cart.total + "", tmp);
+		Helper.info("cart total is " + Cart.total);
+		// make sure prices match expected values
+		Helper.asserts( Cart.total + "", tmp);
 		
+		// new cart item
 		CartItem cartitem = new CartItem();
+		// add current product to cart item
 		cartitem.colorsize.put(color + size, quantity + other_quantity);
-
+		// add current product to cart
 		Cart.itemshistory.put(item.name, cartitem);
 		
+		// click go to checkout or click continue based on > go_to_checkout
 		if (go_to_checkout) {
-			H.info("Checkout");
-			H.clickCss(modal_checkout);
+			Helper.info("Checkout");
+			Helper.clickCss(modal_checkout);
 		} else {
-			H.info("continue");
-			H.clickCss(modal_continue);
+			Helper.info("continue");
+			Helper.clickCss(modal_continue);
 		}
 	}
 	//=================================================================
-	
-	public static void addToFavorites(boolean loggeddin) { // need to be inside iframe to invoke
-		H.waitCss(view_wishlist);
-		H.clickCss(view_wishlist);
-		H.waitCss(view_wishlist_added);
-		if (loggeddin) {
-			H.ass(H.getTextCss(view_wishlist_added), "You must be logged in to manage your wishlist.");
+	/***
+	 *  need to be inside iframe to invoke this method
+	 *  Click add to favorites button, then validate correct action based on login status.
+	 *  @param loggedin: the behavior is different depending on login status
+	 */
+	public static void addToFavorites(boolean loggedin) { 
+		Helper.waitCss(view_wishlist);
+		Helper.clickCss(view_wishlist);
+		Helper.waitCss(view_wishlist_added);
+		if (loggedin) {
+			Helper.asserts(Helper.getTextCss(view_wishlist_added), "You must be logged in to manage your wishlist.");
 		} else {
-			H.ass(H.getTextCss(view_wishlist_added), "Added to your wishlist.");
+			Helper.asserts(Helper.getTextCss(view_wishlist_added), "Added to your wishlist.");
 		}
-		H.waitCss(view_wishlist_added_close, 10);
-		H.clickCss(view_wishlist_added_close);
+		Helper.waitCss(view_wishlist_added_close, 10);
+		Helper.clickCss(view_wishlist_added_close);
 	}
 	
+	/***
+	 * @param id: Index of product in home
+	 * @param setfavorite: click favorite button?
+	 * @return: Item
+	 * Purpose: opens quick view for item and clicks set favorite
+	 */
 	public static Item readQuickView(int id, boolean setfavorite) {
 		goHome();
-		H.waitCss(LoginOut.login_btn);
-		boolean loggedin = H.isPresentCss(LoginOut.login_btn);
+		Helper.waitCss(LoginOut.login_btn);
+		boolean loggedin = Helper.isPresentCss(LoginOut.login_btn);
 		
-		H.waitCss(popular_item + id + ")");
-		H.scrollCss(popular_item + id + ")");
-		H.sleep(1);
-		H.hoverCss(popular_item + id + ")");
-		H.sleep(2);
+		// hover
+		Helper.waitCss(popular_item + id + ")");
+		Helper.scrollCss(popular_item + id + ")");
+		Helper.sleep(1);
+		Helper.hoverCss(popular_item + id + ")");
+		Helper.sleep(2);
 		
-		H.location("QuickView");
-		H.clickCss(quick_view1 + id + quick_view2);
-		H.sleep(3);
-		H.pl("There are iframes: " + H.iframeCount());
+		//click quickview
+		Helper.location("QuickView");
+		Helper.clickCss(quick_view1 + id + quick_view2);
+		Helper.sleep(3);
+		Helper.pl("There are iframes: " + Helper.iframeCount());
 		
-		H.switchIframe(1);
-		H.waitCss(view_name);
+		Helper.switchIframe(1);
+		Helper.waitCss(view_name);
 		Item item = new Item();
 		
-		item.name = H.getTextCss(view_name);
-		item.model = H.getTextCss(view_model);
-		item.condition = H.getTextCss(view_condition);
-		item.description = H.getTextCss(view_description);
-		item.price = H.getTextCss(view_price);
+		// read fields
+		item.name = Helper.getTextCss(view_name);
+		item.model = Helper.getTextCss(view_model);
+		item.condition = Helper.getTextCss(view_condition);
+		item.description = Helper.getTextCss(view_description);
+		item.price = Helper.getTextCss(view_price);
 		
-		H.clickCss(view_size);
+		// get all sizes for this product
+		Helper.clickCss(view_size);
 		String tmp;
-		for(int i = 1; H.isPresentCss(view_size_options + i + ")") ; ++ i) {
-			tmp = H.getTextCss(view_size_options + i + ")");
+		for(int i = 1; Helper.isPresentCss(view_size_options + i + ")") ; ++ i) {
+			tmp = Helper.getTextCss(view_size_options + i + ")");
 			item.sizes.add(tmp);
 		}
-		H.clickCss(view_size);
+		Helper.clickCss(view_size);
 		
-		for(int i = 1; H.isPresentCss(view_color + i + ")") ; ++ i) {
-			tmp = H.getAttributeCss(view_color + i + ") > a", "name");
+		// get all colors for this item
+		for(int i = 1; Helper.isPresentCss(view_color + i + ")") ; ++ i) {
+			tmp = Helper.getAttributeCss(view_color + i + ") > a", "name");
 			item.colors.add(tmp);
 		}
 		
+		// set favorite
 		if (setfavorite) {
 			addToFavorites(loggedin);
 		}
 		
-		//TODO: add buy merch here with function paramer as triger
-		H.switchIframeDefault();
-		H.clickCss(view_close);
+		//TODO: add function to add to cart
+		Helper.switchIframeDefault();
+		Helper.clickCss(view_close);
 		goHome();
 		return item;
 	}

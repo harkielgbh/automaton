@@ -4,8 +4,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import helper.H;
-import helper.S;
+import helper.Helper;
+import helper.SharedResouces;
 
 public class Tests {
 	
@@ -15,7 +15,7 @@ public class Tests {
 	      
 			System.setProperty("webdriver.chrome.driver", "chromedriver92.exe");
 			String URL = "http://automationpractice.com/index.php";
-			S.driver.get(URL);
+			SharedResouces.driver.get(URL);
 	   }
 	
 	@Test
@@ -65,29 +65,29 @@ public class Tests {
 		Item item;
 		HomeMerch.goHome();
 		item = HomeMerch.readQuickView(1,true);
-		HomeMerch.viewAddToCart(1, item.sizes.get(H.randomInt(0, item.sizes.size()-1)), item.colors.get(H.randomInt(0, item.colors.size()-1)), 3, true);
+		HomeMerch.viewAddToCart(1, item.sizes.get(Helper.randomInt(0, item.sizes.size()-1)), item.colors.get(Helper.randomInt(0, item.colors.size()-1)), 3, true);
 		HomeMerch.goHome();
 		
 		item = HomeMerch.readQuickView(2,true);
-		HomeMerch.viewAddToCart(2, item.sizes.get(H.randomInt(0, item.sizes.size()-1)), item.colors.get(H.randomInt(0, item.colors.size()-1)), 4, false);
+		HomeMerch.viewAddToCart(2, item.sizes.get(Helper.randomInt(0, item.sizes.size()-1)), item.colors.get(Helper.randomInt(0, item.colors.size()-1)), 4, false);
 		HomeMerch.goHome();
 		
 		item = HomeMerch.readQuickView(2,true);
-		HomeMerch.viewAddToCart(2, item.sizes.get(H.randomInt(0, item.sizes.size()-1)), item.colors.get(H.randomInt(0, item.colors.size()-1)), 4, false);
+		HomeMerch.viewAddToCart(2, item.sizes.get(Helper.randomInt(0, item.sizes.size()-1)), item.colors.get(Helper.randomInt(0, item.colors.size()-1)), 4, false);
 		HomeMerch.goHome();
 		
 		item = HomeMerch.readQuickView(3,true);
-		HomeMerch.viewAddToCart(3, item.sizes.get(H.randomInt(0, item.sizes.size()-1)), item.colors.get(H.randomInt(0, item.colors.size()-1)), 4, false);
+		HomeMerch.viewAddToCart(3, item.sizes.get(Helper.randomInt(0, item.sizes.size()-1)), item.colors.get(Helper.randomInt(0, item.colors.size()-1)), 4, false);
 		HomeMerch.goHome();
 		
 		item = HomeMerch.readQuickView(3,true);
-		HomeMerch.viewAddToCart(3, item.sizes.get(H.randomInt(0, item.sizes.size()-1)), item.colors.get(H.randomInt(0, item.colors.size()-1)), 5, true);
-		H.sleep(3);
+		HomeMerch.viewAddToCart(3, item.sizes.get(Helper.randomInt(0, item.sizes.size()-1)), item.colors.get(Helper.randomInt(0, item.colors.size()-1)), 5, true);
+		Helper.sleep(3);
 		Checkout.compareCart();
 	}
 	   @AfterTest
 	   public void terminatetest() {
-	      S.driver.close();
+	      SharedResouces.driver.close();
 	   }
 	
 
