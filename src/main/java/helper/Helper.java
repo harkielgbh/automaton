@@ -24,7 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
-public class H {
+public class Helper {
 	
 	
 
@@ -43,50 +43,50 @@ public class H {
 	}
 	
 	public static void quit() {
-		S.driver.quit();
+		SharedResouces.driver.quit();
 	}
 	
-	public static void ass(boolean condition) {
+	public static void asserts(boolean condition) {
 		if(!condition) {
 		    throw new IllegalArgumentException("Condition is not true");
 		}
 	}
 	
-	public static void ass(boolean condition, String msj) {
+	public static void asserts(boolean condition, String msj) {
 		if(!condition) {
 		    throw new IllegalArgumentException(msj);
 		}
 	}
 	
-	public static void ass(String msg) {
+	public static void asserts(String msg) {
 		throw new IllegalArgumentException(msg);
 	}
 	
-	public static void ass(String a, String b) {
+	public static void asserts(String a, String b) {
 		pl("<assert>: " + a + " == " + b);
-		ass(a.equals(b));
+		asserts(a.equals(b));
 	}
 	
-	public static void ass(int a, int b) {
+	public static void asserts(int a, int b) {
 		pl("<assert>: " + a + " == " + b);
-		ass(a == b);
+		asserts(a == b);
 	}
 	
 	
 	public static void switchIframe(String id) {
-		S.driver.switchTo().frame(id);
+		SharedResouces.driver.switchTo().frame(id);
 	}
 	
 	public static void switchIframe(int id) {
-		S.driver.switchTo().frame(id);
+		SharedResouces.driver.switchTo().frame(id);
 	}
 	
 	public static void switchIframeDefault() {
-		S.driver.switchTo().defaultContent();
+		SharedResouces.driver.switchTo().defaultContent();
 	}
 	
 	public static int iframeCount() {
-		return S.driver.findElements(By.tagName("iframe")).size();
+		return SharedResouces.driver.findElements(By.tagName("iframe")).size();
 	}
 
 	
@@ -108,14 +108,14 @@ public class H {
 	public static boolean switchWindow( String title) {
 
 		try {
-			String currentWindow = S.driver.getWindowHandle();
-			Set<String> availableWindows = S.driver.getWindowHandles();
+			String currentWindow = SharedResouces.driver.getWindowHandle();
+			Set<String> availableWindows = SharedResouces.driver.getWindowHandles();
 			if (!availableWindows.isEmpty()) {
 				for (String windowId : availableWindows) {
-					if (S.driver.switchTo().window(windowId).getTitle().equals(title)) {
+					if (SharedResouces.driver.switchTo().window(windowId).getTitle().equals(title)) {
 						return true;
 					} else {
-						S.driver.switchTo().window(currentWindow);
+						SharedResouces.driver.switchTo().window(currentWindow);
 					}
 				}
 			}
@@ -131,13 +131,13 @@ public class H {
 	
 	
 	public static void writeThenEnterEnter(String css, String msj) {
-		S.driver.findElement(By.cssSelector(css)).sendKeys(msj,Keys.ENTER);
+		SharedResouces.driver.findElement(By.cssSelector(css)).sendKeys(msj,Keys.ENTER);
 	}
 	
 	
 	public static String getDropDownSelectedoption(String xpath)
 	{
-		String selectedOption = new Select(S.driver.findElement(By.xpath(xpath))).getFirstSelectedOption().getText();
+		String selectedOption = new Select(SharedResouces.driver.findElement(By.xpath(xpath))).getFirstSelectedOption().getText();
 		return selectedOption;
 	}
 	
@@ -152,7 +152,7 @@ public class H {
 	 * ****************************************************/
 	public static Integer dropDownNoOfOptions(String xpath) 			// by x-path
 	{
-		String[] options = S.driver.findElement(By.xpath(xpath)).getText().split("\n");
+		String[] options = SharedResouces.driver.findElement(By.xpath(xpath)).getText().split("\n");
 		return options.length;
 	}
 	
@@ -166,7 +166,7 @@ public class H {
 	 * ****************************************************/
 	public static Integer dropDownNoOfOptionsByName(String name) 		 // by name
 	{
-		String[] options = S.driver.findElement(By.name(name)).getText().split("\n");
+		String[] options = SharedResouces.driver.findElement(By.name(name)).getText().split("\n");
 		return options.length;
 	}
 	//------------------------------------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdownSelectByValue(String xpath, String value)
 	{
-		WebElement element=S.driver.findElement(By.xpath(xpath));
+		WebElement element=SharedResouces.driver.findElement(By.xpath(xpath));
 		Select se=new Select(element);
 		
 		se.selectByValue(value);
@@ -188,7 +188,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdownSelectByNameAndValue(String name, String value)
 	{
-		WebElement element=S.driver.findElement(By.name(name));
+		WebElement element=SharedResouces.driver.findElement(By.name(name));
 		Select se=new Select(element);
 		
 		se.selectByValue(value);
@@ -200,7 +200,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdown_DE_SelectByValue(String xpath, String value)
 	{
-		WebElement element=S.driver.findElement(By.xpath(xpath));
+		WebElement element=SharedResouces.driver.findElement(By.xpath(xpath));
 		Select se=new Select(element);
 
 		se.deselectByValue(value);
@@ -213,7 +213,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdownSelect(String xpath, String text)
 	{
-		WebElement element=S.driver.findElement(By.xpath(xpath));
+		WebElement element=SharedResouces.driver.findElement(By.xpath(xpath));
 		Select se=new Select(element);
 
 		se.selectByVisibleText(text);
@@ -225,7 +225,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdownSelectByName(String name, String text)
 	{
-		WebElement element=S.driver.findElement(By.name(name));
+		WebElement element=SharedResouces.driver.findElement(By.name(name));
 		Select se=new Select(element);
 
 		se.selectByVisibleText(text);
@@ -238,7 +238,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdownSelectByName(String name, int index)
 	{
-		WebElement element=S.driver.findElement(By.name(name));
+		WebElement element=SharedResouces.driver.findElement(By.name(name));
 		Select se=new Select(element);
 		se.selectByIndex(index);
 	}
@@ -251,7 +251,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdownSelect(String xpath, int index)
 	{
-		WebElement element=S.driver.findElement(By.xpath(xpath));
+		WebElement element=SharedResouces.driver.findElement(By.xpath(xpath));
 		Select se=new Select(element);
 		se.selectByIndex(index);
 	}
@@ -262,7 +262,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdown_DE_Select(String xpath, String text)
 	{
-		WebElement element=S.driver.findElement(By.xpath(xpath));
+		WebElement element=SharedResouces.driver.findElement(By.xpath(xpath));
 		Select se=new Select(element);
 		
 		// select based on text displayed
@@ -275,7 +275,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdown_DE_Select(String xpath, int index)
 	{
-		WebElement element=S.driver.findElement(By.xpath(xpath));
+		WebElement element=SharedResouces.driver.findElement(By.xpath(xpath));
 		Select se=new Select(element);
 		se.deselectByIndex(index);
 	}
@@ -286,7 +286,7 @@ public class H {
 	 * ****************************************************/
 	public static void dropdownDeselectAll(String xpath)
 	{
-		WebElement element=S.driver.findElement(By.xpath(xpath));
+		WebElement element=SharedResouces.driver.findElement(By.xpath(xpath));
 		Select se=new Select(element);
 		
 		se.deselectAll();
@@ -341,7 +341,7 @@ public class H {
 	public static void sendKeysbyCSS(String css, String text){
 		
 		
-		S.driver.findElement(By.cssSelector(css)).sendKeys(text); 
+		SharedResouces.driver.findElement(By.cssSelector(css)).sendKeys(text); 
 		
 		
 		
@@ -355,7 +355,7 @@ public class H {
 		
 		if(max < 0){ max = max * -1;}
 		if(max == 0){max = 1;}
-		if (min > max) {H.pl("Error: min > max; at: a.randomInt(); returning 0;"); return 0;}
+		if (min > max) {Helper.pl("Error: min > max; at: a.randomInt(); returning 0;"); return 0;}
 		// All inclusive
 	    Random rand = new Random();
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
@@ -373,7 +373,7 @@ public class H {
 	 * ****************************************************/
 	public static void deleteCookie(String cookieName)
 	{
-		S.driver.manage().deleteCookieNamed(cookieName);
+		SharedResouces.driver.manage().deleteCookieNamed(cookieName);
 	}	
 	
 	/*****************************************************
@@ -381,7 +381,7 @@ public class H {
 	 * ****************************************************/
 	public static void deleteAllCookies()
 	{
-		S.driver.manage().deleteAllCookies();
+		SharedResouces.driver.manage().deleteAllCookies();
 	}
 	//################################################################################## End Delete Cookies
 	
@@ -393,16 +393,16 @@ public class H {
 	 * ****************************************************/
 	public static void scrollTo(String xpath)
 	{
-       WebElement element = S.driver.findElement(By.xpath(xpath));
-       JavascriptExecutor jse = (JavascriptExecutor)S.driver;
+       WebElement element = SharedResouces.driver.findElement(By.xpath(xpath));
+       JavascriptExecutor jse = (JavascriptExecutor)SharedResouces.driver;
        jse.executeScript("arguments[0].scrollIntoView();", element);
        
 	}
 	
 	public static void scrollCss(String css)
 	{
-       WebElement element = S.driver.findElement(By.cssSelector(css));
-       JavascriptExecutor jse = (JavascriptExecutor)S.driver;
+       WebElement element = SharedResouces.driver.findElement(By.cssSelector(css));
+       JavascriptExecutor jse = (JavascriptExecutor)SharedResouces.driver;
        jse.executeScript("arguments[0].scrollIntoView();", element);
        
 	}
@@ -412,7 +412,7 @@ public class H {
 	 * ****************************************************/
 	public static void scrollBottom()
 	{
-	    JavascriptExecutor jse = (JavascriptExecutor)S.driver;
+	    JavascriptExecutor jse = (JavascriptExecutor)SharedResouces.driver;
        jse.executeScript("window.scrollBy(0,document.body.scrollHeight)", "");
        
 	}
@@ -427,7 +427,7 @@ public class H {
 	 * ****************************************************/
 	public static void scroll(int LR, int UD)
 	{
-       JavascriptExecutor jse = (JavascriptExecutor)S.driver;
+       JavascriptExecutor jse = (JavascriptExecutor)SharedResouces.driver;
        String scroll = "window.scrollBy(" + LR + "," + UD + ")";
        jse.executeScript(scroll, "");
 	}
@@ -441,7 +441,7 @@ public class H {
 	public static String getUrl()
 	{
 		  //Get current page URL
-		  String CurrentURL = S.driver.getCurrentUrl();
+		  String CurrentURL = SharedResouces.driver.getCurrentUrl();
 		  return CurrentURL;
 	}
 	
@@ -450,7 +450,7 @@ public class H {
 	 * ****************************************************/
 	public static String getTitle( ){
 		
-		 JavascriptExecutor javascript = (JavascriptExecutor) S.driver;
+		 JavascriptExecutor javascript = (JavascriptExecutor) SharedResouces.driver;
 		
 		  String pagetitle=(String)javascript.executeScript("return document.title");
 		  return pagetitle;
@@ -461,7 +461,7 @@ public class H {
 	 * ****************************************************/
 	public static String getDomain(){
 		
-		 JavascriptExecutor javascript = (JavascriptExecutor) S.driver;
+		 JavascriptExecutor javascript = (JavascriptExecutor) SharedResouces.driver;
 		 
 		 String Domain=(String)javascript.executeScript("return document.domain");
 		 return Domain;
@@ -483,8 +483,8 @@ public class H {
 					e.printStackTrace();
 				} // 
 		
-		  String alert_message = S.driver.switchTo().alert().getText();
-		  S.driver.switchTo().alert().accept();
+		  String alert_message = SharedResouces.driver.switchTo().alert().getText();
+		  SharedResouces.driver.switchTo().alert().accept();
 		  System.out.println("Alert Message: " + alert_message);
 	}
 	
@@ -511,8 +511,8 @@ public class H {
 					e.printStackTrace();
 				} // 
 		
-		  String alert_message = S.driver.switchTo().alert().getText();
-		  S.driver.switchTo().alert().dismiss();
+		  String alert_message = SharedResouces.driver.switchTo().alert().getText();
+		  SharedResouces.driver.switchTo().alert().dismiss();
 		  System.out.println(alert_message);
 	}
 	
@@ -531,7 +531,7 @@ public class H {
 					e.printStackTrace();
 				}
 				
-		  Alert A3 = S.driver.switchTo().alert();
+		  Alert A3 = SharedResouces.driver.switchTo().alert();
 		  String Alert3 = A3.getText();
 		  System.out.println(Alert3);
 		  //To type text In text box of prompt pop up.
@@ -552,7 +552,7 @@ public class H {
 				e.printStackTrace();
 			}
 			
-	  Alert A3 = S.driver.switchTo().alert();
+	  Alert A3 = SharedResouces.driver.switchTo().alert();
 	  String Alert3 = A3.getText();
 	  System.out.println(Alert3);
 	
@@ -566,7 +566,7 @@ public class H {
 	 * Takes : X-path of the element to click
 	 * ****************************************************/
 	public static void click(String xpath){  // click
-		S.driver.findElement(By.xpath(xpath)).click(); 
+		SharedResouces.driver.findElement(By.xpath(xpath)).click(); 
 	}
 	
 	/*****************************************************
@@ -574,7 +574,7 @@ public class H {
 	 * Takes : X-path of the element to click
 	 * ****************************************************/
 	public static void clickCss(String css){  // click
-		S.driver.findElement(By.cssSelector(css)).click(); 
+		SharedResouces.driver.findElement(By.cssSelector(css)).click(); 
 	}
 	
 	/*****************************************************
@@ -583,7 +583,7 @@ public class H {
 	 * ****************************************************/
 	public static void clickByLinkText(String linkText){  // click
 		
-		S.driver.findElement(By.linkText(linkText)).click(); 
+		SharedResouces.driver.findElement(By.linkText(linkText)).click(); 
 	}
 	
 	/*****************************************************
@@ -591,7 +591,7 @@ public class H {
 	 * Takes : NAME attribute of the element to click
 	 * ****************************************************/
 	public static void clickByName(String name){  // click
-		S.driver.findElement(By.name(name)).click(); 
+		SharedResouces.driver.findElement(By.name(name)).click(); 
 	}
 	
 	/*****************************************************
@@ -601,10 +601,10 @@ public class H {
 	 * ****************************************************/
 	public static void doubleClick(String xpath){
 		
-		  WebElement ele = S.driver.findElement(By.xpath(xpath));
+		  WebElement ele = SharedResouces.driver.findElement(By.xpath(xpath));
 		  
 		  //To generate double click action
-		  Actions action = new Actions(S.driver);
+		  Actions action = new Actions(SharedResouces.driver);
 		  action.doubleClick(ele);
 		  action.perform();
 	}
@@ -619,15 +619,15 @@ public class H {
 	 * Note: When testing please do not hover the actual mouse over the bowser, because it may confuse the hover-action 
 	 * ****************************************************/
 	public static void hoverClickCss(String parent, String child) {
-		H.info("HoverClicking");
+		Helper.info("HoverClicking");
 		// Locating the (Parent element)
-		WebElement mainMenu = S.driver.findElement(By.cssSelector(parent));
+		WebElement mainMenu = SharedResouces.driver.findElement(By.cssSelector(parent));
 		//Instantiating Actions class
-		Actions actions = new Actions(S.driver);
+		Actions actions = new Actions(SharedResouces.driver);
 		//Hovering on main menu
 		actions.moveToElement(mainMenu);
 		// Locating the element from Sub Menu
-		WebElement subMenu = S.driver.findElement(By.cssSelector(child));
+		WebElement subMenu = SharedResouces.driver.findElement(By.cssSelector(child));
 		//To mouseover on sub menu
 		actions.moveToElement(subMenu);
 		//build()- used to compile all the actions into a single step 
@@ -635,10 +635,10 @@ public class H {
 	}
 	
 	public static void hoverCss(String css) {
-		H.info("Hover");
+		Helper.info("Hover");
 		// Locating the (Parent element)
-		WebElement mainMenu = S.driver.findElement(By.cssSelector(css));
-		Actions actions = new Actions(S.driver);
+		WebElement mainMenu = SharedResouces.driver.findElement(By.cssSelector(css));
+		Actions actions = new Actions(SharedResouces.driver);
 		actions.moveToElement(mainMenu);
 		actions.moveToElement(mainMenu).build().perform();
 	}
@@ -652,7 +652,7 @@ public class H {
 	 * Takes : X-path to the element
 	 * ****************************************************/
 	public static String getText( String xpath){ // get text
-		return S.driver.findElement(By.xpath(xpath)).getText(); 
+		return SharedResouces.driver.findElement(By.xpath(xpath)).getText(); 
 	}
 	
 	/*****************************************************
@@ -660,7 +660,7 @@ public class H {
 	 * Takes : CSS to the element, and attribute name
 	 * ****************************************************/
 	public static boolean isAttributeCss( String css, String attribute){ // get text
-		return S.driver.findElement(By.cssSelector(css)).getAttribute(attribute) != null; 
+		return SharedResouces.driver.findElement(By.cssSelector(css)).getAttribute(attribute) != null; 
 	}
 	
 	
@@ -670,8 +670,8 @@ public class H {
 	 * ****************************************************/
 	public static String getTextCss( String css){ // get text
 		
-		String text = S.driver.findElement(By.cssSelector(css)).getText();
-		H.pl("<gettext>: " + text);
+		String text = SharedResouces.driver.findElement(By.cssSelector(css)).getText();
+		Helper.pl("<gettext>: " + text);
 		return text;
 	}
 	
@@ -680,7 +680,7 @@ public class H {
 	 * Takes : X-path of the element, Text to be sent
 	 * ****************************************************/
 	public static void sendkeys( String xpath, String text){  //sendKeys
-		S.driver.findElement(By.xpath(xpath)).sendKeys(text);
+		SharedResouces.driver.findElement(By.xpath(xpath)).sendKeys(text);
 	}
 	
 	/*****************************************************
@@ -688,7 +688,7 @@ public class H {
 	 * Takes : NAME attribute of the element, Text to be sent
 	 * ****************************************************/
 	public static void sendkeysByName( String name, String text){  //sendKeys
-		S.driver.findElement(By.name(name)).sendKeys(text);
+		SharedResouces.driver.findElement(By.name(name)).sendKeys(text);
 	}
 	
 		
@@ -697,7 +697,7 @@ public class H {
 	 * Takes : X-path of the element
 	 * ****************************************************/
 	public static void clear(String xpath){  //.clear
-		S.driver.findElement(By.xpath(xpath)).clear();
+		SharedResouces.driver.findElement(By.xpath(xpath)).clear();
 	}
 	
 	/*****************************************************
@@ -705,7 +705,7 @@ public class H {
 	 * Takes : X-css of the element
 	 * ****************************************************/
 	public static void clearCss(String css){  //.clearcss
-		S.driver.findElement(By.cssSelector(css)).clear();
+		SharedResouces.driver.findElement(By.cssSelector(css)).clear();
 	}
 	
 	/*****************************************************
@@ -713,8 +713,8 @@ public class H {
 	 * Takes : X-css of the element
 	 * ****************************************************/
 	public static void CmdAdelCss(String css){  //.clearcss
-		S.driver.findElement(By.cssSelector(css)).sendKeys(Keys.COMMAND, "a");
-		S.driver.findElement(By.cssSelector(css)).sendKeys(Keys.DELETE);
+		SharedResouces.driver.findElement(By.cssSelector(css)).sendKeys(Keys.COMMAND, "a");
+		SharedResouces.driver.findElement(By.cssSelector(css)).sendKeys(Keys.DELETE);
 	}
 	
 	
@@ -724,7 +724,7 @@ public class H {
 	 * Takes : Name of the element
 	 * ****************************************************/
 	public static void clearByName(String name){  //.clear
-		S.driver.findElement(By.name(name)).clear();
+		SharedResouces.driver.findElement(By.name(name)).clear();
 	}
 	
 	
@@ -733,7 +733,7 @@ public class H {
 	 * Takes : Keys key
 	 * ****************************************************/
 	public static void press(Keys key){ 		// press a key once
-		Actions myAction = new Actions(S.driver);
+		Actions myAction = new Actions(SharedResouces.driver);
 		myAction.sendKeys(key).build().perform();
 	}
 	
@@ -742,7 +742,7 @@ public class H {
 	 * Takes : string
 	 * ****************************************************/
 	public static void press(String msj){ 		// press a key once
-		Actions myAction = new Actions(S.driver);
+		Actions myAction = new Actions(SharedResouces.driver);
 		myAction.sendKeys(msj).build().perform();
 	}
 	
@@ -751,7 +751,7 @@ public class H {
 	 * Takes : Keys key, and a NUMBER representing the number of consecutive times to send the keyboard press
 	 * ****************************************************/
 	public static void press( Keys key, int rep){ // press one key n number of times
-		Actions myAction = new Actions(S.driver);
+		Actions myAction = new Actions(SharedResouces.driver);
 		
 		for (int i = 0; i < rep; ++i ){
 			myAction.sendKeys(key).build().perform();
@@ -763,12 +763,12 @@ public class H {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		clipboard.setContents(stringSelection, stringSelection);
 
-		S.robot.keyPress(KeyEvent.VK_CONTROL);
-		S.robot.keyPress(KeyEvent.VK_V);
-		S.robot.delay(100);
-		S.robot.keyRelease(KeyEvent.VK_V);
-		S.robot.keyRelease(KeyEvent.VK_CONTROL);
-		S.robot.delay(100);
+		SharedResouces.robot.keyPress(KeyEvent.VK_CONTROL);
+		SharedResouces.robot.keyPress(KeyEvent.VK_V);
+		SharedResouces.robot.delay(100);
+		SharedResouces.robot.keyRelease(KeyEvent.VK_V);
+		SharedResouces.robot.keyRelease(KeyEvent.VK_CONTROL);
+		SharedResouces.robot.delay(100);
 	}
 	
 	public static void robotCopy(String text) {
@@ -776,12 +776,12 @@ public class H {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		clipboard.setContents(stringSelection, stringSelection);
 
-		S.robot.keyPress(KeyEvent.VK_CONTROL);
-		S.robot.keyPress(KeyEvent.VK_C);
-		S.robot.delay(100);
-		S.robot.keyRelease(KeyEvent.VK_C);
-		S.robot.keyRelease(KeyEvent.VK_CONTROL);
-		S.robot.delay(100);
+		SharedResouces.robot.keyPress(KeyEvent.VK_CONTROL);
+		SharedResouces.robot.keyPress(KeyEvent.VK_C);
+		SharedResouces.robot.delay(100);
+		SharedResouces.robot.keyRelease(KeyEvent.VK_C);
+		SharedResouces.robot.keyRelease(KeyEvent.VK_CONTROL);
+		SharedResouces.robot.delay(100);
 	}
 	
 	public static void robotType (String keys) {
@@ -791,34 +791,34 @@ public class H {
 	            throw new RuntimeException(
 	                "Key code not found for character '" + c + "'");
 	        }
-	        S.robot.keyPress(keyCode);
-	        S.robot.delay(100);
-	        S.robot.keyRelease(keyCode);
-	        S.robot.delay(100);
+	        SharedResouces.robot.keyPress(keyCode);
+	        SharedResouces.robot.delay(100);
+	        SharedResouces.robot.keyRelease(keyCode);
+	        SharedResouces.robot.delay(100);
 	    }
 		
 	}
 	
 	public static void robotTypeTab () {
-        S.robot.keyPress(KeyEvent.VK_TAB);
-        S.robot.delay(100);
-        S.robot.keyRelease(KeyEvent.VK_TAB);
-        S.robot.delay(100);
+        SharedResouces.robot.keyPress(KeyEvent.VK_TAB);
+        SharedResouces.robot.delay(100);
+        SharedResouces.robot.keyRelease(KeyEvent.VK_TAB);
+        SharedResouces.robot.delay(100);
 		
 	}
 	public static void robotTypeEnter () {
-        S.robot.keyPress(KeyEvent.VK_ENTER);
-        S.robot.delay(100);
-        S.robot.keyRelease(KeyEvent.VK_ENTER);
-        S.robot.delay(100);
+        SharedResouces.robot.keyPress(KeyEvent.VK_ENTER);
+        SharedResouces.robot.delay(100);
+        SharedResouces.robot.keyRelease(KeyEvent.VK_ENTER);
+        SharedResouces.robot.delay(100);
 		
 	}
 	
 	public static void robotTypeDown () {
-        S.robot.keyPress(KeyEvent.VK_DOWN);
-        S.robot.delay(100);
-        S.robot.keyRelease(KeyEvent.VK_DOWN);
-        S.robot.delay(100);
+        SharedResouces.robot.keyPress(KeyEvent.VK_DOWN);
+        SharedResouces.robot.delay(100);
+        SharedResouces.robot.keyRelease(KeyEvent.VK_DOWN);
+        SharedResouces.robot.delay(100);
 		
 	}
 	
@@ -833,9 +833,9 @@ public class H {
 	{
 	    try
 	    {
-	    	S.robot.keyPress(keyCode);
-	    	S.robot.keyRelease(keyCode);
-	    	S.robot.delay(50);
+	    	SharedResouces.robot.keyPress(keyCode);
+	    	SharedResouces.robot.keyRelease(keyCode);
+	    	SharedResouces.robot.delay(50);
 	    }
 	    catch(Exception e)
 	    {
@@ -847,12 +847,12 @@ public class H {
 	{
 	    try
 	    {
-	    	S.robot.keyPress(keyCode1);
-	    	S.robot.keyPress(keyCode2);
-	    	S.robot.delay(50);
-	    	S.robot.keyRelease(keyCode2);
-	    	S.robot.keyRelease(keyCode1);
-	    	S.robot.delay(50);
+	    	SharedResouces.robot.keyPress(keyCode1);
+	    	SharedResouces.robot.keyPress(keyCode2);
+	    	SharedResouces.robot.delay(50);
+	    	SharedResouces.robot.keyRelease(keyCode2);
+	    	SharedResouces.robot.keyRelease(keyCode1);
+	    	SharedResouces.robot.delay(50);
 	    	
 	    }
 	    catch(Exception e)
@@ -896,7 +896,7 @@ public class H {
 	 * Takes : X-path of the element
 	 * ****************************************************/
 	public static boolean isPresent( String xpath){
-		return (S.driver.findElements(By.xpath(xpath)).size() > 0);
+		return (SharedResouces.driver.findElements(By.xpath(xpath)).size() > 0);
 	}
 	
 	/*****************************************************
@@ -905,7 +905,7 @@ public class H {
 	 * ****************************************************/
 	public static boolean isPresentCss( String css){
 		if (css.length() < 2) { return false; }
-		return (S.driver.findElements(By.cssSelector(css)).size() > 0);
+		return (SharedResouces.driver.findElements(By.cssSelector(css)).size() > 0);
 	}
 	
 	
@@ -918,7 +918,7 @@ public class H {
 		if (css.length() < 2) { return false; }
 		for (int i = 0; i < waitSecs; ++ i) {
 			sleep(1);
-			if (S.driver.findElements(By.cssSelector(css)).size() > 0) {
+			if (SharedResouces.driver.findElements(By.cssSelector(css)).size() > 0) {
 				return true;
 			}
 		}
@@ -944,7 +944,7 @@ public class H {
 	 * Takes : Css of the element
 	 * ****************************************************/
 	public static int getChildCountCss( String css){
-		return S.driver.findElements(By.cssSelector(css)).size();
+		return SharedResouces.driver.findElements(By.cssSelector(css)).size();
 	}
 	
 	/*****************************************************
@@ -958,7 +958,7 @@ public class H {
 	 * Takes : X-path of the element
 	 * ****************************************************/
 	public static int getChildCount( String xpath){
-		return S.driver.findElements(By.xpath(xpath)).size();
+		return SharedResouces.driver.findElements(By.xpath(xpath)).size();
 	}
 	
 	/*****************************************************
@@ -966,7 +966,7 @@ public class H {
 	 * Takes : X-path of the element
 	 * ****************************************************/
 	public static String getCssClass( String css){
-		return S.driver.findElement(By.cssSelector(css)).getAttribute("class");
+		return SharedResouces.driver.findElement(By.cssSelector(css)).getAttribute("class");
 	}
 	
 	
@@ -980,7 +980,7 @@ public class H {
 	 * 		And a timeout exception will be thrown
 	 * ****************************************************/
 	public static void wait( String xpath, int secs){ 
-		WebDriverWait wait = new WebDriverWait(S.driver, secs);
+		WebDriverWait wait = new WebDriverWait(SharedResouces.driver, secs);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 	}
 	
@@ -993,7 +993,7 @@ public class H {
 	 * 		And a timeout exception will be likely thrown
 	 * ****************************************************/
 	public static void waitCss( String selector, int secs){ 
-		WebDriverWait wait = new WebDriverWait(S.driver, secs);
+		WebDriverWait wait = new WebDriverWait(SharedResouces.driver, secs);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
 	}
 	
@@ -1005,7 +1005,7 @@ public class H {
 	 * 		And a timeout exception will be likely thrown
 	 * ****************************************************/
 	public static void waitCss( String selector){ 
-		WebDriverWait wait = new WebDriverWait(S.driver, 60);
+		WebDriverWait wait = new WebDriverWait(SharedResouces.driver, 60);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
 	}
 	
@@ -1018,7 +1018,7 @@ public class H {
 	 * ****************************************************/
 	
 	public static void waitID( String ID, int secs){ 
-		WebDriverWait wait = new WebDriverWait(S.driver, secs);
+		WebDriverWait wait = new WebDriverWait(SharedResouces.driver, secs);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(ID)));
 	}
 	
@@ -1030,7 +1030,7 @@ public class H {
 		try {
 			Thread.sleep((int) (d * 1000));
 		} catch (InterruptedException e) {
-			H.error("El metodo sleep ha fallado");
+			Helper.error("El metodo sleep ha fallado");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -1039,24 +1039,24 @@ public class H {
 	
 	public static void check(boolean term, String msj) {
 		if (!term) {
-			H.pl("<ERROR> " + msj);
+			Helper.pl("<ERROR> " + msj);
 		}
 	}
 	
 	public static void warn(String msj) {
-			H.pl("<WARNING> " + msj);
+			Helper.pl("<WARNING> " + msj);
 	}
 	
 	public static void error(String msj) {
-		H.pl("<ERROR> " + msj);
+		Helper.pl("<ERROR> " + msj);
 	}
 	
 	public static void info(String msj) {
-		H.pl("<INFO> " + msj);
+		Helper.pl("<INFO> " + msj);
 	}
 	
 	public static void location(String msj) {
-		H.pl("<LOCATION> " + msj);
+		Helper.pl("<LOCATION> " + msj);
 	}
 	
 	//################################################################################## End Wait, Sleep, ...
@@ -1070,7 +1070,7 @@ public class H {
 	 * ****************************************************/
 	public static void goBack( )
 	{
-		S.driver.navigate().back();
+		SharedResouces.driver.navigate().back();
 	}
 	
 	/*****************************************************
@@ -1078,7 +1078,7 @@ public class H {
 	 * ****************************************************/
 	public static void goForward( )
 	{
-		S.driver.navigate().forward();
+		SharedResouces.driver.navigate().forward();
 	}
 	
 	/*****************************************************
@@ -1087,7 +1087,7 @@ public class H {
 	 * Takes : The X-path of the Slider, and the number of moves to be made towards the right
 	 * ****************************************************/
 	public static void sliderMoveRigth(String xpath, int move){
-   WebElement slider = S.driver.findElement(By.xpath(xpath));
+   WebElement slider = SharedResouces.driver.findElement(By.xpath(xpath));
    
    //TODO this can be applied to many other elements
    for (int i = 1; i <= move ; i++) {
@@ -1101,7 +1101,7 @@ public class H {
 	 * Takes : The X-path of the Slider, and the number of moves to be made towards the left
 	 * ****************************************************/
 	public static void sliderMoveLeft(String xpath, int move){
-	    WebElement slider = S.driver.findElement(By.xpath(xpath));
+	    WebElement slider = SharedResouces.driver.findElement(By.xpath(xpath));
 
 	    for (int i = 1; i <= move ; i++) {
 	        slider.sendKeys(Keys.ARROW_RIGHT);
@@ -1109,7 +1109,7 @@ public class H {
 	}
 	
 	public static void pressDown(String css, int move){
-	    WebElement slider = S.driver.findElement(By.cssSelector(css));
+	    WebElement slider = SharedResouces.driver.findElement(By.cssSelector(css));
 
 	    for (int i = 0; i < move ; i++) {
 	        slider.sendKeys(Keys.ARROW_DOWN);
@@ -1122,7 +1122,7 @@ public class H {
 	 * Takes : X-path of the web-element, and local-path of the file to be uploaded
 	 * ****************************************************/
 	public static void uploadFile(String xpath,String filePath){
-       WebElement element = S.driver.findElement(By.xpath(xpath));
+       WebElement element = SharedResouces.driver.findElement(By.xpath(xpath));
 		element.sendKeys(filePath);
 	}
 	
@@ -1152,7 +1152,7 @@ public class H {
 	 * ****************************************************/
 	public static String getTextCssAngAll(String css) {
 		String theTextIWant = "";
-		List<WebElement> values = S.driver.findElements(By.cssSelector(css));
+		List<WebElement> values = SharedResouces.driver.findElements(By.cssSelector(css));
 		for(WebElement el : values)
 		{
 		  theTextIWant += el.getAttribute("value");
@@ -1161,12 +1161,12 @@ public class H {
 	}
 	
 	public static String getTextCssAng(String css ) {
-		WebElement value = S.driver.findElement(By.cssSelector(css));
+		WebElement value = SharedResouces.driver.findElement(By.cssSelector(css));
 		return value.getAttribute("value");
 	}
 	
 	public static String getAttributeCss(String css, String attribute ) {
-		String tmp = S.driver.findElement(By.cssSelector(css)).getAttribute(attribute);
+		String tmp = SharedResouces.driver.findElement(By.cssSelector(css)).getAttribute(attribute);
 		pl("<getattr>: " + tmp);
 		return tmp;
 	}

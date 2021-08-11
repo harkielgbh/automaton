@@ -1,14 +1,21 @@
 package challengetest;
 
-import helper.S;
-import helper.H;
+import helper.SharedResouces;
+import helper.Helper;
 
+
+/***
+ * 
+ * @author harki
+ * Purpose: Use this class to test methods and classes, simply call methods here and run this class as java application
+ *
+ */
 public class Challenge {
 
 	public static void main(String[] args) {
 		System.setProperty("webdriver.chrome.driver", "chromedriver92.exe");
 		String URL = "http://automationpractice.com/index.php";
-		S.driver.get(URL);
+		SharedResouces.driver.get(URL);
 		
 //		LoginOut.loginInvalid();
 //		LoginOut.login();
